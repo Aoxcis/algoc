@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "factorielle.h": "c",
+        "parfaits.h": "c"
+    }
+}

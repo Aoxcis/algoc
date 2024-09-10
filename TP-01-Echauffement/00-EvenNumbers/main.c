@@ -1,13 +1,19 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "parfaits.h"
+#include "factorielle.h"
 
-bool isEven(int i) { return i%2==0; }
+
 
 int main (void)
 {
-   for(int i=0;i<11;i++)
-	   printf("%i est %s\n",i,isEven(i)? "pair" : "impair");
 
+
+	// scanf("%d", &temp);
+    nbParfaits(10000);
+
+	factorielle(15);
+	
 	return EXIT_SUCCESS;
 }
