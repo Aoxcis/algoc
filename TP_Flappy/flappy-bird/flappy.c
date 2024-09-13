@@ -61,19 +61,19 @@ int main()
                         case SDL_QUIT:
                                 exit(0);
                         case SDL_KEYDOWN:
-                        if (event.key.keysym.sym == SDLK_ESCAPE)
+                                if (event.key.keysym.sym == SDLK_ESCAPE)
                                 {
                                         exit(0);
                                 }
-                        else if (event.key.keysym.sym == SDLK_RETURN)
+                                else if (event.key.keysym.sym == SDLK_b)
                                 {
                                         background_iterator++;
-                                        exit(0);
+                                        setup();
                                 }
-                        else if (event.key.keysym.sym == SDLK_p)
+                                else if (event.key.keysym.sym == SDLK_p)
                                 {
                                         pillar_iterator++;
-                                        exit(0);
+                                        setup();
                                 }
                                 if(gamestate == ALIVE)
                                 {
@@ -103,21 +103,22 @@ int main()
         }
 }
 
-char background_img[80];
-char pillar_img[80];
-sprintf(background_img, "res/background%d.bmp", background_iterator%3);
-sprintf(pillar_img, "res/pillar%d.bmp", pillar_iterator%3);
+
 
 //initial setup to get the window and rendering going
 void setup()
 {
         srand(time(NULL));
-
         SDL_Init(SDL_INIT_VIDEO);
         SDL_Window *win = SDL_CreateWindow("Flappy",
                 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, W, H, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_PRESENTVSYNC);
         if(!renderer) exit(fprintf(stderr, "Could not create SDL renderer\n"));
+
+        char background_img[80];
+        char pillar_img[80];
+        sprintf(background_img, "res/background%d.bmp", background_iterator%3);
+        sprintf(pillar_img, "res/pillar%d.bmp", pillar_iterator%3);
 
         surf = SDL_LoadBMP(pillar_img);
         SDL_SetColorKey(surf, 1, 0xffff00);
