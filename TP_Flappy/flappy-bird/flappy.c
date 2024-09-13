@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 #define SDL_DISABLE_IMMINTRIN_H
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <SDL_ttf.h>
 
 #define W 480
@@ -73,6 +73,7 @@ int main()
                         else if (event.key.keysym.sym == SDLK_p)
                                 {
                                         pillar_iterator++;
+                                        exit(0);
                                 }
                                 if(gamestate == ALIVE)
                                 {
