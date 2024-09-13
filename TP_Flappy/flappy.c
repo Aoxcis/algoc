@@ -30,6 +30,9 @@ int score;
 int best;
 int idle_time = 30;
 float frame = 0;
+int background_iterator = 0;
+int pillar_iterator = 0;
+
 
 SDL_Event event;
 SDL_Renderer *renderer;
@@ -62,6 +65,15 @@ int main()
                                 {
                                         exit(0);
                                 }
+                        else if (event.key.keysym.sym == SDLK_RETURN)
+                                {
+                                        background_iterator++;
+                                        exit(0);
+                                }
+                        else if (event.key.keysym.sym == SDLK_p)
+                                {
+                                        pillar_iterator++;
+                                }
                                 if(gamestate == ALIVE)
                                 {
                                         player_vel = -11.7f;
@@ -90,6 +102,11 @@ int main()
         }
 }
 
+char background_img[80];
+char pillar_img[80];
+sprintf(background_img, "res/background%d.bmp", background_iterator%3);
+sprintf(pillar_img, "res/pillar%d.bmp", pillar_iterator%3);
+
 //initial setup to get the window and rendering going
 void setup()
 {
@@ -101,10 +118,10 @@ void setup()
         renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_PRESENTVSYNC);
         if(!renderer) exit(fprintf(stderr, "Could not create SDL renderer\n"));
 
-        surf = SDL_LoadBMP("res/pillar.bmp");
+        surf = SDL_LoadBMP(pillar_img);
         SDL_SetColorKey(surf, 1, 0xffff00);
         pillar = SDL_CreateTextureFromSurface(renderer, surf);
-        surf = SDL_LoadBMP("res/background.bmp");
+        surf = SDL_LoadBMP(background_img);
         background = SDL_CreateTextureFromSurface(renderer, surf);
 
         for(int i = 0; i < 4; i++)
