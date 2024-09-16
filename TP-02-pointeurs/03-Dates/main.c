@@ -10,4 +10,12 @@ int main(void){
     Date d;
     initialiseDate(&d);
     afficheDate(&d);
+    int nbDates;
+    printf("Entrer le nombre de dates : ");
+    //scanf("%i", &nbDates);
+    Date *pd;
+    pd = newDate();
+    afficheDate(pd);
+    free(pd);
+    pd = NULL;
 }

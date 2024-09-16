@@ -28,4 +28,4 @@ typedef struct Date Date;
 
 void initialiseDate(Date *date);
 void afficheDate(Date *date);
-
+Date* newDate();

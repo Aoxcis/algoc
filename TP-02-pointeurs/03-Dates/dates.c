@@ -22,3 +22,15 @@ void initialiseDate(Date *date){
 void afficheDate(Date *date){
     printf("%d/%d/%d\n", date->jour, date->mois, date->annee);
 }
+
+Date creerDateParCopie(){
+    Date d;
+    initialiseDate(&d);
+    return d;
+}
+
+Date* newDate(){
+    Date *date = malloc(sizeof(Date));
+    initialiseDate(date);
+    return date;
+}
