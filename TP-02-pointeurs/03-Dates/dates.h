@@ -1,3 +1,31 @@
-void afficheDate(struct Date* adresse); // Function prototype
+#pragma once
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
-void initialiseDate(struct Date* adresse);
+enum Mois {
+    Janvier = 1,
+    Fevrier,
+    Mars,
+    Avril,
+    Mai,
+    Juin,
+    Juillet,
+    Aout,
+    Septembre,
+    Octobre,
+    Novembre,
+    Decembre
+};
+
+struct Date{
+    int annee;
+    enum Mois mois;
+    int jour;
+};
+
+typedef struct Date Date;
+
+void initialiseDate(Date *date);
+void afficheDate(Date *date);
+
