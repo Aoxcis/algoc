@@ -16,12 +16,14 @@ int taillet1(int* pt1){
 }
 
 int* repeat(int *pt1, int *pt2){
+    int current = 0;
     int sommet1 = taillet1(pt1);
     int *nvtab = (int*)malloc(sommet1 * sizeof(int));
 
     for(int i = 0; i<taille; i++){
-        for(int j = taille*i; j < (pt1[i]+(taille*i)); j++){
-            nvtab[j] = pt2[i];
+        for(int j = 0; j < pt1[i]; j++){
+            nvtab[current] = pt2[i];
+            current++;
         } 
     }
     printf("Nouveau tableau: ");
@@ -39,5 +41,6 @@ int main(void){
     int *pnvt = repeat(t1,t2);
     
     free(pnvt);
+    pnvt = NULL;
     return 0;
 }
