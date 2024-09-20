@@ -36,50 +36,58 @@ int numberOfWinners(FILE *fichier){
 	return counter;
 }
 
-char* readLine(FILE *fichier){
+char* readLine(FILE *fichier, int line){
 	rewind(fichier);
 	char buffer[2000];
-	fgets(buffer, sizeof(buffer), fichier);
+	for(int i = 0; i < line; i++){
+		fgets(buffer, sizeof(buffer), fichier);
+		if(i == line){
+			break;
+		}
+	}
+	
 	return buffer;
 }
 
-char* readPartLine(FILE *fichier){
-	char *line = readLine(fichier);
-	printf("ligne entiere : %s\n", line);
-	int buffer1[50];
-	char buffer2[50];
-	char buffer3[50];
-	int current = 0;
-	int partie = 0;
-	for(int i = 0; fgetc(fichier) == '\0'; i++){
-		if(fgetc(fichier) == ';' || fgetc(fichier) == '\0'){
-			current = 0;
-			partie++;
+void readWinners(FILE *fichier){
+	rewind(fichier);
+	int nbligne = numberOfWinners(fichier);
+	Gagnant gagnantTab[nbligne];
+
+	for(int i = 0; i < nbligne; i++){
+		char *ligne = readLine(fichier, i+1);
+		char *token = strtok(ligne, ";");
+		if(token != NULL){
+			gagnantTab[i].annee = atoi(token);
 		}
-		else {
-			if(partie == 0 && current < 49) {
-				buffer1[current] = fgetc(fichier);
-				buffer1[current + 1] = '\0';
-			}
-			if(partie == 1 && current < 49) {
-				buffer2[current] = fgetc(fichier);
-				buffer2[current + 1] = '\0';
-			}
-			if(partie == 2 && current < 49) {
-				buffer3[current] = fgetc(fichier);
-				buffer3[current + 1] = '\0';
-			}
-			current++;
+
+		token = strtok(NULL, ";");
+		if(token != NULL){
+			gagnantTab[i].nom = malloc(strlen(token) + 1);
+			strcpy(gagnantTab[i].nom, token);
 		}
-		if(partie >2){
-			break;
-		} 
+
+		token = strtok(NULL, ";");
+		if(token != NULL){
+			gagnantTab[i].description = malloc(strlen(token) + 1);
+			strcpy(gagnantTab[i].description, token);
+		}
 	}
-	return buffer1;
+
+	for(int i = 0; i < nbligne; i++){
+		printf("Annee : %d\n", gagnantTab[i].annee);
+		printf("Nom : %s\n", gagnantTab[i].nom);
+		printf("Description : %s\n", gagnantTab[i].description);
+	}
+
+	for(int i = 0; i < nbligne; i++){
+		free(gagnantTab[i].nom);
+		free(gagnantTab[i].description);
+	}
 }
 
 
-int main(int argc, char** argv)
+int main(void)
 {
 	char filename[] = "turingWinners.csv";
 	char outputFilename[] = "out.csv";
@@ -96,10 +104,7 @@ int main(int argc, char** argv)
 	nb = numberOfWinners(fichier);
 	printf("Number of winners : %d\n", nb);
 
-	char *prem;
-	prem = readLine(fichier);
-	printf("ligne entiere : %s", prem);
-	prem = NULL;
+	readWinners(fichier);
 	fclose(fichier);
 	return EXIT_SUCCESS;
 }
