@@ -49,10 +49,9 @@ char* readLine(FILE *fichier, int line){
 	return buffer;
 }
 
-void readWinners(FILE *fichier){
+void readWinners(FILE *fichier, Gagnant *gagnantTab){
 	rewind(fichier);
 	int nbligne = numberOfWinners(fichier);
-	Gagnant gagnantTab[nbligne];
 
 	for(int i = 0; i < nbligne; i++){
 		char *ligne = readLine(fichier, i+1);
@@ -73,39 +72,37 @@ void readWinners(FILE *fichier){
 			strcpy(gagnantTab[i].description, token);
 		}
 	}
+}
 
-	for(int i = 0; i < nbligne; i++){
-		printf("Annee : %d\n", gagnantTab[i].annee);
-		printf("Nom : %s\n", gagnantTab[i].nom);
-		printf("Description : %s\n", gagnantTab[i].description);
-	}
-
-	for(int i = 0; i < nbligne; i++){
-		free(gagnantTab[i].nom);
-		free(gagnantTab[i].description);
+void printWinners(Gagnant *gagnantTab, FILE *Result, int nb){
+	for(int i = 0; i < nb; i++){
+		fprintf(Result, "%d;%s;%s", gagnantTab[i].annee, gagnantTab[i].nom, gagnantTab[i].description);
 	}
 }
 
 
-int main(void)
+int main(int argc, char** argv)
 {
 	char filename[] = "turingWinners.csv";
 	char outputFilename[] = "out.csv";
 
 	FILE *fichier = fopen(filename, "r");
-	if (fichier == NULL) {
-		fprintf(stderr, "Erreur: %s\n", strerror(errno));
-		return EXIT_FAILURE;
-	}
-	else{
-		printf("Fichier ouvert avec succes\n");
-	}
-	int nb;
-	nb = numberOfWinners(fichier);
-	printf("Number of winners : %d\n", nb);
+	FILE *output = fopen(outputFilename, "w");
 
-	readWinners(fichier);
+	int nb = numberOfWinners(fichier);
+	Gagnant *gagnantTab = malloc(sizeof(Gagnant) * nb);
+
+	readWinners(fichier, gagnantTab);
+	printWinners(gagnantTab, output, nb);
+	
+	for(int i = 0; i < nb; i++){
+		free(gagnantTab[i].nom);
+		free(gagnantTab[i].description);
+	}
+	free(gagnantTab);
 	fclose(fichier);
+	fclose(output);
+	
 	return EXIT_SUCCESS;
 }
 
