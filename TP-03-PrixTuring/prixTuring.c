@@ -72,6 +72,7 @@ void readWinners(FILE *fichier, Gagnant *gagnantTab){
 			strcpy(gagnantTab[i].description, token);
 		}
 	}
+
 }
 
 void printWinners(Gagnant *gagnantTab, FILE *Result, int nb){
@@ -80,28 +81,99 @@ void printWinners(Gagnant *gagnantTab, FILE *Result, int nb){
 	}
 }
 
+void infosAnnee(FILE *fichier, Gagnant *gagnantTab ,int annee){
+	rewind(fichier);
+	printf("testinfos annee test test\n");
+	int nb = numberOfWinners(fichier);
+	for(int i = 0; i < nb; i++){
+		char *ligne = readLine(fichier, i+1);
+		char *token = strtok(ligne, ";");
+		if(token != NULL){
+			if(atoi(token) == annee){
+				printf("Annee : %d\n", atoi(token));
+				printf("Nom : %s\n", gagnantTab[i].nom);
+				printf("Description : %s\n", gagnantTab[i].description);
+			}
+		}
+	}
+}
+
 
 int main(int argc, char** argv)
 {
-	char filename[] = "turingWinners.csv";
-	char outputFilename[] = "out.csv";
+	char *inputFilename = NULL;
+    char *outputFilename = "out.csv";  // Fichier de sortie par défaut
+    FILE *fichierIn, *fichierOut;
+	int afficheAnnee = 0;
+	int annee = 0;
+	int sort = 0;
 
-	FILE *fichier = fopen(filename, "r");
-	FILE *output = fopen(outputFilename, "w");
+    // Parcours des arguments de la ligne de commande
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-o") == 0 && (i + 1) < argc) {
+            outputFilename = argv[++i];
+			
+        } 
 
-	int nb = numberOfWinners(fichier);
+		if(strcmp(argv[i], "--sort") == 0 && (i + 1) < argc){
+			sort = 1;
+		}
+
+		if (strcmp(argv[i], "--info") == 0 && (i + 1) < argc) {
+			afficheAnnee = 1;
+			annee = atoi(argv[++i]);
+			
+		}
+
+		else {
+            inputFilename = argv[i];
+			
+        }
+    }
+
+	inputFilename = "turingWinners.csv";
+	outputFilename = "out.csv";
+
+    // Vérifier que le fichier d'entrée a été spécifié
+    if (inputFilename == NULL) {
+        fprintf(stderr, "Erreur: aucun fichier d'entrée spécifié.\n");
+        return EXIT_FAILURE;
+    }
+
+    // Ouvrir le fichier d'entrée
+    fichierIn = fopen(inputFilename, "r");
+    if (fichierIn == NULL) {
+        fprintf(stderr, "Erreur: impossible d'ouvrir le fichier %s\n", inputFilename);
+        return EXIT_FAILURE;
+    }
+
+    // Ouvrir le fichier de sortie
+    fichierOut = fopen(outputFilename, "w");
+    if (fichierOut == NULL) {
+        fprintf(stderr, "Erreur: impossible de créer le fichier %s\n", outputFilename);
+        fclose(fichierIn);
+        return EXIT_FAILURE;
+    }
+
+	int nb = numberOfWinners(fichierIn);
 	Gagnant *gagnantTab = malloc(sizeof(Gagnant) * nb);
 
-	readWinners(fichier, gagnantTab);
-	printWinners(gagnantTab, output, nb);
+	
+	readWinners(fichierIn, gagnantTab);
+	
+	if(afficheAnnee == 1){
+		infosAnnee(fichierIn, gagnantTab, annee);
+	}
+	
+	printWinners(gagnantTab, fichierOut, nb);
 	
 	for(int i = 0; i < nb; i++){
 		free(gagnantTab[i].nom);
 		free(gagnantTab[i].description);
 	}
 	free(gagnantTab);
-	fclose(fichier);
-	fclose(output);
+	fclose(fichierIn);
+	fclose(fichierOut);
 	
 	return EXIT_SUCCESS;
 }
