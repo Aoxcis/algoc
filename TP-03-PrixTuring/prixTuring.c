@@ -72,7 +72,16 @@ void readWinners(FILE *fichier, Gagnant *gagnantTab){
 			strcpy(gagnantTab[i].description, token);
 		}
 	}
+}
 
+int compareByYear(const void *a, const void *b) {
+    Gagnant *gagnantA = (Gagnant *)a;
+    Gagnant *gagnantB = (Gagnant *)b;
+    return gagnantA->annee - gagnantB->annee;
+}
+
+void sortTuringWinnersByYear(Gagnant *gagnantTab, int count) {
+    qsort(gagnantTab, count, sizeof(Gagnant), compareByYear);
 }
 
 void printWinners(Gagnant *gagnantTab, FILE *Result, int nb){
@@ -162,6 +171,10 @@ int main(int argc, char** argv)
 		infosAnnee(fichierIn, gagnantTab, annee);
 	}
 	
+	if(sort == 1){
+		sortTuringWinnersByYear(gagnantTab, nb);
+	}
+
 	printWinners(gagnantTab, fichierOut, nb);
 	
 	for(int i = 0; i < nb; i++){
