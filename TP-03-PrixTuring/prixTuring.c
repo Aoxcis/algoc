@@ -181,7 +181,7 @@ int main(int argc, char** argv)
 		free(gagnantTab[i].nom);
 		free(gagnantTab[i].description);
 	}
-	free(gagnantTab);
+
 	fclose(fichierIn);
 	fclose(fichierOut);
 	
