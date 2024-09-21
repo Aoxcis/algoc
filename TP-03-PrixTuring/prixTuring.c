@@ -131,9 +131,6 @@ int main(int argc, char** argv)
         }
     }
 
-	inputFilename = "turingWinners.csv";
-	outputFilename = "out.csv";
-
     // Vérifier que le fichier d'entrée a été spécifié
     if (inputFilename == NULL) {
         fprintf(stderr, "Erreur: aucun fichier d'entrée spécifié.\n");
