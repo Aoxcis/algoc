@@ -108,7 +108,7 @@ void infosAnnee(FILE *fichier, Gagnant *gagnantTab ,int annee){
 }
 
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	char *inputFilename = NULL;
     char *outputFilename = "out.csv";  // Fichier de sortie par défaut
