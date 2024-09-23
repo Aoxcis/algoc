@@ -6,17 +6,26 @@
 
 // retourne vrai si l est vide et faux sinon
 bool estVide(Liste l) {
-	return l == NULL;
+	if(l == NULL){
+		return true;
+	}
+	return false;
+
 }
 
 // créer une liste d'un seul élément contenant la valeur v
 Liste creer(Element v){
-	return TODO;
+	Liste l = (Liste)malloc(sizeof(Cellule));
+	l->val = v;
+	l->suiv = NULL;
+	return l;
 }
 
 // ajoute l'élément v en tete de la liste l
 Liste ajoutTete(Element v, Liste l) {
-	return TODO;
+	Liste new = creer(v);
+	new->suiv = l;
+	return new;
 }
 
 
@@ -30,20 +39,45 @@ void afficheElement(Element e) {
 // Attention la liste peut être vide !
 // version itérative
 void afficheListe_i(Liste l) {
-	TODO;
+	if(estVide(l)){
+		printf("Liste vide\n");
+	}
+	else{
+		Liste tmp = l;
+		while(tmp->suiv != NULL){
+			afficheElement(tmp->val);
+			tmp = tmp->suiv;
+		}
+	}
 }
 
 // version recursive
 void afficheListe_r(Liste l) {
-	TODO;
+	if(estVide(l)){
+		printf("Liste vide\n");
+	}
+	else if(l->suiv == NULL){
+		afficheElement(l->val);
+	}
+	else {
+		afficheElement(l->val);
+		afficheListe_r(l->suiv);
+	}
 }
 
-void detruireElement(Element e) {}
+void detruireElement(Element e) {
+}
 
 // Détruit tous les éléments de la liste l
 // version itérative
 void detruire_i(Liste l) {
-	TODO;
+	Liste tmp = l;
+	while(tmp != NULL){
+		Liste tmp2 = tmp;
+		tmp = tmp->suiv;
+		detruireElement(tmp2);
+	}
+
 }
 
 // version récursive
