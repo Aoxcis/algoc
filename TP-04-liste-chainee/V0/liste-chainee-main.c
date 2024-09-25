@@ -56,29 +56,29 @@ int main(void){
 		printf("\n");
 	}
 
-	// printf("retirePremier_i(1)   : ");
-	// l = retirePremier_i(1,l);
-	// afficheListe_r(l);
+	printf("retirePremier_i(1)   : ");
+	l = retirePremier_i(1,l);
+	afficheListe_r(l);
 
-	// printf("retirePremier_i(1)   : ");
-	// l = retirePremier_i(1,l);
-	// afficheListe_r(l);
+	printf("retirePremier_i(1)   : ");
+	l = retirePremier_i(1,l);
+	afficheListe_r(l);
 
-	// printf("retirePremier_i(100) : ");
-	// l = retirePremier_i(100,l);
-	// afficheListe_r(l);
+	printf("retirePremier_i(100) : ");
+	l = retirePremier_i(100,l);
+	afficheListe_r(l);
 
-	// printf("retirePremier_r(4)   : ");
-	// l = retirePremier_r(4,l);
-	// afficheListe_r(l);
+	printf("retirePremier_r(4)   : ");
+	l = retirePremier_r(4,l);
+	afficheListe_r(l);
 
-	// printf("retirePremier_r(4)   : ");
-	// l = retirePremier_r(4,l);
-	// afficheListe_r(l);
+	printf("retirePremier_r(4)   : ");
+	l = retirePremier_r(4,l);
+	afficheListe_r(l);
 
-	// printf("retirePremier_r(99)  : ");
-	// l = retirePremier_r(99,l);
-	// afficheListe_r(l);
+	printf("retirePremier_r(99)  : ");
+	l = retirePremier_r(99,l);
+	afficheListe_r(l);
 
 	detruire_r(l);
 	
