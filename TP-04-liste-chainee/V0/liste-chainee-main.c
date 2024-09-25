@@ -2,6 +2,7 @@
 // gcc -W -Wall -Wno-unused-parameter -std=c99 liste-chainee.c liste-chainee-main.c -o liste-chaine-main
 
 #include "liste-chainee.h"
+#include "liste-chainee.c"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -22,9 +23,11 @@ int main(void){
 	l = ajoutTete(1,l);
 
 	afficheListe_i(l);
-
+	printf("\n");
 	ajoutFin_r(99,l);
 	afficheListe_i(l);
+
+	printf("\n");
 
 	ajoutFin_r(100,l);
 	afficheListe_i(l);
@@ -53,29 +56,29 @@ int main(void){
 		printf("\n");
 	}
 
-	printf("retirePremier_i(1)   : ");
-	l = retirePremier_i(1,l);
-	afficheListe_r(l);
+	// printf("retirePremier_i(1)   : ");
+	// l = retirePremier_i(1,l);
+	// afficheListe_r(l);
 
-	printf("retirePremier_i(1)   : ");
-	l = retirePremier_i(1,l);
-	afficheListe_r(l);
+	// printf("retirePremier_i(1)   : ");
+	// l = retirePremier_i(1,l);
+	// afficheListe_r(l);
 
-	printf("retirePremier_i(100) : ");
-	l = retirePremier_i(100,l);
-	afficheListe_r(l);
+	// printf("retirePremier_i(100) : ");
+	// l = retirePremier_i(100,l);
+	// afficheListe_r(l);
 
-	printf("retirePremier_r(4)   : ");
-	l = retirePremier_r(4,l);
-	afficheListe_r(l);
+	// printf("retirePremier_r(4)   : ");
+	// l = retirePremier_r(4,l);
+	// afficheListe_r(l);
 
-	printf("retirePremier_r(4)   : ");
-	l = retirePremier_r(4,l);
-	afficheListe_r(l);
+	// printf("retirePremier_r(4)   : ");
+	// l = retirePremier_r(4,l);
+	// afficheListe_r(l);
 
-	printf("retirePremier_r(99)  : ");
-	l = retirePremier_r(99,l);
-	afficheListe_r(l);
+	// printf("retirePremier_r(99)  : ");
+	// l = retirePremier_r(99,l);
+	// afficheListe_r(l);
 
 	detruire_r(l);
 	

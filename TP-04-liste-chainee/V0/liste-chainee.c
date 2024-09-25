@@ -39,15 +39,9 @@ void afficheElement(Element e) {
 // Attention la liste peut être vide !
 // version itérative
 void afficheListe_i(Liste l) {
-	if(estVide(l)){
-		printf("Liste vide\n");
-	}
-	else{
-		Liste tmp = l;
-		while(tmp->suiv != NULL){
-			afficheElement(tmp->val);
-			tmp = tmp->suiv;
-		}
+	while(l != NULL){
+		afficheElement(l->val);
+		l = l->suiv;
 	}
 }
 
@@ -56,10 +50,7 @@ void afficheListe_r(Liste l) {
 	if(estVide(l)){
 		printf("Liste vide\n");
 	}
-	else if(l->suiv == NULL){
-		afficheElement(l->val);
-	}
-	else {
+	else{
 		afficheElement(l->val);
 		afficheListe_r(l->suiv);
 	}
@@ -71,29 +62,43 @@ void detruireElement(Element e) {
 // Détruit tous les éléments de la liste l
 // version itérative
 void detruire_i(Liste l) {
-	Liste tmp = l;
-	while(tmp != NULL){
-		Liste tmp2 = tmp;
-		tmp = tmp->suiv;
-		detruireElement(tmp2);
+	while(l != NULL){
+		detruireElement(l->val);
+		l = l->suiv;
 	}
-
 }
 
 // version récursive
 void detruire_r(Liste l) {
-	TODO;
+	if(l != NULL){
+		detruireElement(l->val);
+		detruire_r(l->suiv);
+		free(l);
+		
+	}
 }
 
 // retourne la liste dans laquelle l'élément v a été ajouté en fin
 // version itérative
 Liste ajoutFin_i(Element v, Liste l) {
-	return TODO;
+	Liste new = creer(v);
+	while(l->suiv != NULL){
+		l = l->suiv;
+	}
+	l->suiv = new;
+	return l;
 }
 
 // version recursive
 Liste ajoutFin_r(Element v, Liste l) {
-	return TODO;
+	if(l->suiv == NULL){
+		Liste new = creer(v);
+		l->suiv = new;
+		return l;
+	}
+	else {
+		ajoutFin_r(v, l->suiv);
+	}
 }
 
 // compare deux elements
@@ -104,12 +109,26 @@ bool equalsElement(Element e1, Element e2){
 // Retourne un pointeur sur l'élément de la liste l contenant la valeur v ou NULL
 // version itérative
 Liste cherche_i(Element v,Liste l) {
-	return TODO;
+	while(l!= NULL){
+		if(equalsElement(v, l->val)){
+			return l;
+		}
+		l = l->suiv;
+	}
+	return NULL;
 }
 
 // version récursive
 Liste cherche_r(Element v,Liste l) {
-	return TODO;
+	if(l != NULL){
+		if(equalsElement(l->val, v)){
+			return l;
+		}
+		else{
+			cherche_r(v, l->suiv);
+		}
+	}
+	return NULL;
 }
 
 // Retourne la liste modifiée dans la laquelle le premier élément ayant la valeur v a été supprimé
