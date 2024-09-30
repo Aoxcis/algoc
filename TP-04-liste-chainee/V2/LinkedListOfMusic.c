@@ -1,60 +1,88 @@
-#include "linkedListOfMusic.h"
+#include "LinkedListOfMusic.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#define TODO NULL;
-void ReadMusic(FILE* f, Element tabMusic, int numMusic) {
-    char buffer[1000];
-    int i = 0;
+
+
+int numLine(FILE* f) {
+    int numLine = 0;
     rewind(f);
-
-    while (fgets(buffer, sizeof(buffer), f) != NULL && i < numMusic) {
-        char* token = strtok(buffer, ";");
-        if (token != NULL) {
-            tabMusic[i].name = malloc(strlen(token) + 1);  // +1 pour \0
-            strcpy(tabMusic[i].name, token);
-        }
-        token = strtok(NULL, ";");
-        if (token != NULL) {
-            tabMusic[i].artist = malloc(strlen(token) + 1);  // +1 pour \0
-            strcpy(tabMusic[i].artist, token);
-        }
-        token = strtok(NULL, ";");
-        if (token != NULL) {
-            tabMusic[i].album = malloc(strlen(token) + 1);  // +1 pour \0
-            strcpy(tabMusic[i].album, token);
-        }
-        token = strtok(NULL, ";");
-        if (token != NULL) {
-            tabMusic[i].genre = malloc(strlen(token) + 1);  // +1 pour \0
-            strcpy(tabMusic[i].genre, token);
-        }
-        token = strtok(NULL, ";");
-        if (token != NULL) {
-            tabMusic[i].discNumber = atoi(token);
-        }
-        token = strtok(NULL, ";");
-        if (token != NULL) {
-            tabMusic[i].trackNumber = atoi(token);
-        }
-        token = strtok(NULL, ";");
-        if (token != NULL) {
-            tabMusic[i].year = atoi(token);
-        }
-        i++;
+    char buffer[2000];
+    numLine = 0;
+    while(fgets(buffer, sizeof(buffer), f) != NULL){
+        (numLine)++;
     }
 }
-void PrintMusic(FILE* output, Element musique){
-    fprintf(output,"%s;%s;%s;%s;%d;%d;%d",musique->name,musique->artist,musique->album,musique->genre,musique->discNumber,musique->trackNumber,musique->year);
+
+//lis une ligne du fichier
+char* readLine(FILE* f, int line){
+    rewind(f);
+	char buffer[2000];
+	for(int i = 0; i < line; i++){
+		fgets(buffer, sizeof(buffer), f);
+		if(i == line){
+			break;
+		}
+	}
+	
+	return buffer;
 }
 
-void PrintMusics(FILE* output, Liste l){
-    while(l != NULL){
-        PrintMusic(output, l->val);
-        l = l->suiv;
-    }
+// lis un fichier csv contenant des musiques et les stocke dans un tableau de Music
+void readMusic(FILE* fichier, Element tabMusic, int numMusic){
+    rewind(fichier);
+	int nbligne = numLine(fichier);
+
+	for(int i = 0; i < nbligne; i++){
+		char *ligne = readLine(fichier, i+1);
+		char *token = strtok(ligne, ",");
+		if(token != NULL){
+			tabMusic->name = malloc(strlen(token) + 1);
+			strcpy(tabMusic->name, token);
+		}
+
+		token = strtok(NULL, ",");
+		if(token != NULL){
+			tabMusic->artist = malloc(strlen(token) + 1);
+			strcpy(tabMusic->artist, token);
+		}
+
+		token = strtok(NULL, ",");
+		if(token != NULL){
+			tabMusic->album = malloc(strlen(token) + 1);
+			strcpy(tabMusic->album, token);
+		}
+
+        token = strtok(NULL, ",");
+		if(token != NULL){
+			tabMusic->genre = malloc(strlen(token) + 1);
+			strcpy(tabMusic->genre, token);
+		}
+
+        token = strtok(NULL, ",");
+        if(token != NULL){
+			tabMusic->discNumber = atoi(token);
+		}
+
+        token = strtok(NULL, ",");
+        if(token != NULL){
+			tabMusic->trackNumber = atoi(token);
+		}
+
+        token = strtok(NULL, ",");
+        if(token != NULL){
+			tabMusic->year = atoi(token);
+		}
+	}
 }
+
+void printMusic(FILE* output, Element musique){
+    fprintf(output, "%s,%s,%s,%s,%d,%d,%d\n", musique->name, musique->artist, musique->album, musique->genre, musique->discNumber, musique->trackNumber, musique->year);
+}
+
+
+
 // retourne vrai si l est vide et faux sinon
 bool estVide(Liste l) {
 	return l == NULL;
@@ -76,7 +104,7 @@ Liste ajoutTete(Element v, Liste l) {
 }
 
 void afficheElement(Element e) {      //affiche un element de type void*
-    return 0;  // a faire
+    printf("%s;%s;%s;%s;%d;%d;%d\n", e->name, e->artist, e->album, e->genre, e->discNumber, e->trackNumber, e->year);
 }
 
 // affiche tous les éléments de la liste l
@@ -173,7 +201,7 @@ Liste cherche_i(Element v,Liste l) {
 		}else{
 			l=l->suiv;
 		}
-	};
+	}
 }
 
 // version récursive

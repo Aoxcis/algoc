@@ -10,18 +10,19 @@ int main(void){
 
 	initialiser(&a);
 	// a = NULL;
-	printf("estVide(a)= %s\n",estVide(a)?"TRUE":"FALSE");
+	
 	//printf("nombreDeNoeud(a)= %i\n",nombreDeNoeud(a));
+	printf("estVide(a)= %s\n",estVide(a)?"TRUE":"FALSE");
+	//a = insere_r(a, 2);
 
-	a = creer(4);
+
 	a = insere_i(a,5);
-	a = insere_r(a, 10);
-	printf("%d/n", a->val);
-
+	a = insere_i(a,3);
+	a = insere_i(a,10);
+	a = insere_i(a,1);
+	afficheGRD_r(a);printf("\n");
 
 	return 0;
-	a = insere_r(a,5);
-	afficheGRD_r(a);printf("\n");
 	a = insere_r(a,3);
 	afficheGRD_r(a);printf("\n");
 	a = insere_r(a,2);

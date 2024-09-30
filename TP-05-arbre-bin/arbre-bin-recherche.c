@@ -25,26 +25,32 @@ ArbreBinaire creer(Element e) {
 // si a contient déjà un element e, ce dernier n'est pas insérer afin d'éviter les doublons
 // version itérative
 ArbreBinaire insere_i(ArbreBinaire a, Element e) {
-	if(estVide(a)) {
-		return creer(e);
-	}
+	ArbreBinaire pere_p = NULL, p = a;
 
-	while(true){
-		if(a->val == NULL){
-			return creer(e);
+	while(!estVide(p) && p->val !=e){
+		pere_p = p;
+		if(p->val >=e){
+			p = p->filsGauche;
 		}
-		else if(e==(a->val)){
-			return a;
-		}
-		
-		else if(e<a->val && a->val !=NULL){
-			a = a->filsGauche;
-		}
-		else if(e>a->val && a->val !=NULL){
-			a = a->filsDroit;
+		else {
+			p = p->filsDroit;
 		}
 	}
+	
+	if(estVide(p)){
+		a = creer(e);
+	}
+	else{
+		if(pere_p->val >= e){
+			pere_p->filsGauche = creer(e);
+		}
+		else{
+			pere_p->filsDroit = creer(e);
+		}
+	}
+	return a;
 }
+
 // insere e dans a sachant que a est un arbre binaire de recherche
 // si a contient déjà un element e, ce dernier n'est pas insérer afin d'éviter les doublons
 // version récursive
@@ -52,16 +58,13 @@ ArbreBinaire insere_r(ArbreBinaire a, Element e) {
 	if (estVide(a)) {
 		return creer(e);
 	}
-	if(e==a->val) {
-		return a;
-	}
-	else if(a->val == NULL){
-		return creer(e);
-	}
-	else if (e < a->val) {
-		a->filsGauche = insere_r(a->filsGauche, e);
-	} else if (e > a->val) {
-		a->filsDroit = insere_r(a->filsDroit, e);
+	else {
+		if (a->val > e) {
+			a->filsGauche = insere_r(a->filsGauche, e);
+		}
+		else if (a->val < e) {
+			a->filsDroit = insere_r(a->filsDroit, e);
+		}
 	}
 	return a;
 }
@@ -96,6 +99,13 @@ void afficheRGD_r(ArbreBinaire a){
 }
 
 void afficheGRD_r(ArbreBinaire a){
+	if(!estVide(a)){
+		printf("(");
+		afficheGRD_r(a->filsGauche);
+		printf("%d ",a->val);
+		afficheGRD_r(a->filsDroit);
+		printf(")");
+	}
 }
 
 void afficheGDR_r(ArbreBinaire a){

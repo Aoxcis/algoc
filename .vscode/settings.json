@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "factorielle.h": "c",
-        "parfaits.h": "c"
+        "parfaits.h": "c",
+        "linkedlistofmusic.h": "c"
     }
 }

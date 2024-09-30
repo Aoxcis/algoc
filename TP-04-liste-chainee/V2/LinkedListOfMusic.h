@@ -26,13 +26,16 @@ typedef struct cellule_s Cellule;
 
 typedef Cellule* Liste;
 // lis un fichier csv contenant des musiques et les stocke dans un tableau de Music
-void ReadMusic(FILE* f, Music* tabMusic, int numMusic);
+void readMusic(FILE* f, Element tabMusic, int numMusic);
 
 // écris une musique dans un fichier csv
-void PrintWinners(FILE* output, Element musique);
+void printMusic(FILE* output, Element musique);
 
 // retourne vrai si l est vide et faux sinon
 bool estVide(Liste l);
+
+//retourne le nombre de lignes d'un fichier
+int numLine(FILE* f);
 
 // créer une liste d'un seul élément contenant la valeur v
 Liste creer(Element v);
