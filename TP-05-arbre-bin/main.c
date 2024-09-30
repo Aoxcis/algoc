@@ -3,6 +3,7 @@
 // gcc -W -Wall -Wextra -std=c99 arbre-bin-recherche-correction.c arbre-bin-recherche-main.c
 
 #include "arbre-bin-recherche.h"
+#include "arbre-bin-recherche.c"
 
 int main(void){
 	ArbreBinaire a; //,p;
@@ -10,8 +11,15 @@ int main(void){
 	initialiser(&a);
 	// a = NULL;
 	printf("estVide(a)= %s\n",estVide(a)?"TRUE":"FALSE");
-	printf("nombreDeNoeud(a)= %i\n",nombreDeNoeud(a));
+	//printf("nombreDeNoeud(a)= %i\n",nombreDeNoeud(a));
 
+	a = creer(4);
+	a = insere_i(a,5);
+	a = insere_r(a, 10);
+	printf("%d/n", a->val);
+
+
+	return 0;
 	a = insere_r(a,5);
 	afficheGRD_r(a);printf("\n");
 	a = insere_r(a,3);
@@ -23,7 +31,7 @@ int main(void){
 	a = insere_r(a,1);
 	afficheGRD_r(a);printf("\n");
 
-	printf("nombreDeNoeud(a)= %i\n",nombreDeNoeud(a));
+	//printf("nombreDeNoeud(a)= %i\n",nombreDeNoeud(a));
 
 	a = insere_r(a,7);
 	afficheGRD_r(a);printf("\n");
