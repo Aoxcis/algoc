@@ -1,21 +1,8 @@
 #pragma once
 
-
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
-typedef struct mus {
-    char* name;
-    char* artist;
-    char* album;
-    char* genre;
-    int discNumber;
-    int trackNumber;
-    int year;
-} Music;
 
-typedef Music* Element;
+typedef void* Element;
 
 struct cellule_s {
 	Element val;
@@ -25,13 +12,7 @@ struct cellule_s {
 typedef struct cellule_s Cellule;
 
 typedef Cellule* Liste;
-// lis un fichier csv contenant des musiques et les stocke dans un tableau de Music
-void ReadMusic( FILE *f, Liste l, int numMusic);
 
-// écris une musique dans un fichier csv
-void PrintMusic(FILE* output, Element musique);
-//écris toutes les musiques d'une liste dans un fichier csv
-void PrintMusics(FILE* output, Liste l);
 // retourne vrai si l est vide et faux sinon
 bool estVide(Liste l);
 
@@ -41,7 +22,7 @@ Liste creer(Element v);
 // ajoute l'élément v en tete de la liste l
 Liste ajoutTete(Element v, Liste l);
 
-void afficheElement(Element e);
+extern void afficheElement(Element e);
 
 // affiche tous les éléments de la liste l
 // Attention, cette fonction doit être indépendante du type des éléments de la liste
@@ -53,10 +34,12 @@ void afficheListe_i(Liste l);
 // version recursive
 void afficheListe_r(Liste l);
 
-void detruireElement(Element e);
+extern void detruireElement(Element e);
 
-// // Détruit tous les éléments de la liste l
-// // version itérative
+extern bool equalsElement(Element e1, Element e2);
+
+// Détruit tous les éléments de la liste l
+// version itérative
 void detruire_i(Liste l);
 
 // version récursive

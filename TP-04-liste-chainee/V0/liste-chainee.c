@@ -10,7 +10,6 @@ bool estVide(Liste l) {
 		return true;
 	}
 	return false;
-
 }
 
 // créer une liste d'un seul élément contenant la valeur v

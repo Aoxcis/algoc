@@ -45,7 +45,6 @@ char* readLine(FILE *fichier, int line){
 			break;
 		}
 	}
-	
 	return buffer;
 }
 

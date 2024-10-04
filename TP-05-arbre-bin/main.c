@@ -18,9 +18,17 @@ int main(void){
 
 	a = insere_i(a,5);
 	a = insere_i(a,3);
+	a = insere_i(a,2);
 	a = insere_i(a,10);
-	a = insere_i(a,1);
-	afficheGRD_r(a);printf("\n");
+	a = insere_i(a,8);
+	a = insere_i(a,6);
+	a = insere_i(a,13);
+	a = insere_i(a,34);
+	a = insere_i(a,21);
+	a = insere_i(a,48);
+	//afficheRGD_r(a);printf("\n");
+	//afficheRDG_r(a);
+	prettyPrint(a, 0);
 
 	return 0;
 	a = insere_r(a,3);

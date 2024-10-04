@@ -1,88 +1,9 @@
-#include "linkedListOfMusic.h"
+#include "linkedList.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
 #define TODO NULL;
 
-void ReadMusic( FILE *f, Liste l, int numMusic){
-    char buffer[1000];
-    int i = 0;
-    rewind(f);
-
-    while (fgets(buffer, sizeof(buffer), f) != NULL && i < numMusic) {
-        Element musique = malloc(sizeof(Music));
-        if (musique == NULL) {
-            fprintf(stderr, "Memory allocation error\n");
-            exit(EXIT_FAILURE);
-        }
-
-        char* token = strtok(buffer, ",");
-        if (token != NULL) {
-            musique->name = malloc(strlen(token) + 1);  // +1 pour \0
-            if (musique->name == NULL) {
-                fprintf(stderr, "Memory allocation error\n");
-                exit(EXIT_FAILURE);
-            }
-            strcpy(musique->name, token);
-        }
-        token = strtok(NULL, ",");
-        if (token != NULL) {
-            musique->artist = malloc(strlen(token) + 1);  // +1 pour \0
-            if (musique->artist == NULL) {
-                fprintf(stderr, "Memory allocation error\n");
-                exit(EXIT_FAILURE);
-            }
-            strcpy(musique->artist, token);
-        }
-        token = strtok(NULL, ",");
-        if (token != NULL) {
-            musique->album = malloc(strlen(token) + 1);  // +1 pour \0
-            if (musique->album == NULL) {
-                fprintf(stderr, "Memory allocation error\n");
-                exit(EXIT_FAILURE);
-            }
-            strcpy(musique->album, token);
-        }
-        token = strtok(NULL, ",");
-        if (token != NULL) {
-            musique->genre = malloc(strlen(token) + 1);  // +1 pour \0
-            if (musique->genre == NULL) {
-                fprintf(stderr, "Memory allocation error\n");
-                exit(EXIT_FAILURE);
-            }
-            strcpy(musique->genre, token);
-        }
-        token = strtok(NULL, ",");
-        if (token != NULL) {
-            musique->discNumber = atoi(token);
-        }
-        token = strtok(NULL, ",");
-        if (token != NULL) {
-            musique->trackNumber = atoi(token);
-        }
-        token = strtok(NULL, ",");
-        if (token != NULL) {
-            musique->year = atoi(token);
-        }
-        l = ajoutFin_i(musique, l);
-        l=l->suiv;
-        i++;
-    }
-}
-
-
-void PrintMusic(FILE* output, Element musique){
-    if (musique != NULL){
-    fprintf(output,"%s,%s,%s,%s,%d,%d,%d\n",musique->name,musique->artist,musique->album,musique->genre,musique->discNumber,musique->trackNumber,musique->year);
-}
-}
-void PrintMusics(FILE* output, Liste l){
-    while(l != NULL){
-        PrintMusic(output, l->val);
-        l = l->suiv;
-    }
-}
 // retourne vrai si l est vide et faux sinon
 bool estVide(Liste l) {
 	return l == NULL;
@@ -91,7 +12,8 @@ bool estVide(Liste l) {
 // créer une liste d'un seul élément contenant la valeur v
 Liste creer(Element v){
 	Liste liste = malloc(sizeof(Cellule));
-    liste->val = v;
+	liste->val= malloc(sizeof(Element));
+    liste->val=v;
 	liste->suiv=NULL;
 	return liste;
 }
@@ -103,8 +25,8 @@ Liste ajoutTete(Element v, Liste l) {
     return nouvelleCellule;
 }
 
-void afficheElement(Element e) {      //affiche un element de type void*
-    printf("%s;%s;%s;%s;%d;%d;%d",e->name,e->artist,e->album,e->genre,e->discNumber,e->trackNumber,e->year);  // a faire
+extern void afficheElement(Element e) {      //affiche un element de type void*
+
 }
 
 // affiche tous les éléments de la liste l
@@ -128,12 +50,7 @@ void afficheListe_r(Liste l) {
 	}
 }
 
-void detruireElement(Element e) {
-    free(e->artist);
-    free(e->name);
-    free(e->album);
-    free(e->genre);
-    free(e);
+extern void detruireElement(Element e) {
 }
 
 // Détruit tous les éléments de la liste l
@@ -182,14 +99,8 @@ Liste ajoutFin_r(Element v, Liste l) {
 }
 
 // compare deux elements
-bool equalsElement(Element e1, Element e2){
-    return ((strcmp(e1->artist, e2->artist) == 0) &&
-            (strcmp(e1->name, e2->name) == 0) &&
-            (strcmp(e1->album, e2->album) == 0) &&
-            (strcmp(e1->genre, e2->genre) == 0) &&
-            (e1->discNumber == e2->discNumber) &&
-            (e1->trackNumber == e2->trackNumber) &&
-            (e1->year == e2->year));
+extern bool equalsElement(Element e1, Element e2){
+
 }
 
 // Retourne un pointeur sur l'élément de la liste l contenant la valeur v ou NULL
@@ -201,7 +112,8 @@ Liste cherche_i(Element v,Liste l) {
 		}else{
 			l=l->suiv;
 		}
-	};return l;
+	};
+	return l;
 }
 
 // version récursive

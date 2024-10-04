@@ -9,62 +9,52 @@ bool estVide(ArbreBinaire a) {
 
 // initialise l'arbre a à l'arbre vide
 void initialiser(ArbreBinaire* a) {
-	*a = NULL;
+	*a=NULL;
 }
 
 // créer un arbre contenant un seul noeud ayant la valeur e
 ArbreBinaire creer(Element e) {
-	ArbreBinaire a = (ArbreBinaire) malloc(sizeof(Noeud));
-	initialiser(&a->filsGauche);
-	initialiser(&a->filsDroit);
-	a->val = e;
-	return a;
+	ArbreBinaire arbre = malloc(sizeof(Noeud));
+	arbre->val = e;
+	arbre->filsGauche = NULL;
+	arbre->filsDroit = NULL;
+	return arbre;
 }
-
-// insere e dans a sachant que a est un arbre binaire de recherche
-// si a contient déjà un element e, ce dernier n'est pas insérer afin d'éviter les doublons
+// insère e dans a sachant que a est un arbre binaire de recherche
+// si a contient déjà un élément e, ce dernier n'est pas inséré afin d'éviter les doublons
 // version itérative
 ArbreBinaire insere_i(ArbreBinaire a, Element e) {
-	ArbreBinaire pere_p = NULL, p = a;
-
-	while(!estVide(p) && p->val !=e){
-		pere_p = p;
-		if(p->val >=e){
-			p = p->filsGauche;
-		}
-		else {
-			p = p->filsDroit;
+	ArbreBinaire parent = NULL;
+	ArbreBinaire actuel = a;
+	while (!estVide(actuel)){
+		parent = actuel;
+		if (actuel->val == e){
+			return a;
+		}else if (actuel->val >= e){
+			actuel = actuel->filsGauche;
+		}else{
+			actuel = actuel->filsDroit;
 		}
 	}
-	
-	if(estVide(p)){
-		a = creer(e);
-	}
-	else{
-		if(pere_p->val >= e){
-			pere_p->filsGauche = creer(e);
-		}
-		else{
-			pere_p->filsDroit = creer(e);
-		}
+	if (estVide(parent)){
+		return creer(e);
+	}else if(parent->val>=e){
+		parent->filsGauche = creer(e);
+	}else {
+		parent->filsDroit = creer(e);
 	}
 	return a;
 }
-
 // insere e dans a sachant que a est un arbre binaire de recherche
 // si a contient déjà un element e, ce dernier n'est pas insérer afin d'éviter les doublons
 // version récursive
 ArbreBinaire insere_r(ArbreBinaire a, Element e) {
-	if (estVide(a)) {
+	if (estVide(a)){
 		return creer(e);
-	}
-	else {
-		if (a->val > e) {
-			a->filsGauche = insere_r(a->filsGauche, e);
-		}
-		else if (a->val < e) {
-			a->filsDroit = insere_r(a->filsDroit, e);
-		}
+	}else if (a->val >= e){
+		a->filsGauche = insere_r(a->filsGauche, e);
+	}else if (a->val < e){
+		a->filsDroit = insere_r(a->filsDroit, e);
 	}
 	return a;
 }
@@ -79,8 +69,21 @@ int nombreDeNoeud(ArbreBinaire a){
 // retourne la profondeur du noeud ayant la valeur e dans a
 // retourne -1 si a est vide ou si e n'est pas dans a
 int profondeur(ArbreBinaire a, Element e){
-
-		return 0;
+	if (a == NULL) {
+        return -1; // Tree is empty or node not found
+    }
+    if (a->val == e) {
+        return 0; // Node found at root
+    }
+    int profondeurGauche = profondeur(a->filsGauche, e);
+    int profondeurDroite = profondeur(a->filsDroit, e);
+    if (profondeurGauche != -1) {
+        return profondeurGauche + 1; // Node found in left subtree
+    }
+    if (profondeurDroite != -1) {
+        return profondeurDroite + 1; // Node found in right subtree
+    }
+    return -1;
 }
 
 // retourne la hauteur de l'arbre a
@@ -94,17 +97,43 @@ ArbreBinaire pere(ArbreBinaire a, Element elem){
 	return NULL;
 }
 
-
-void afficheRGD_r(ArbreBinaire a){
+void afficheElement(Element e) {      //affiche un element de type void*
+	printf("%d",e);  // a faire
 }
-
-void afficheGRD_r(ArbreBinaire a){
+void afficheRGD_r(ArbreBinaire a){
 	if(!estVide(a)){
 		printf("(");
-		afficheGRD_r(a->filsGauche);
-		printf("%d ",a->val);
-		afficheGRD_r(a->filsDroit);
+		afficheRGD_r(a->filsGauche);
+		afficheElement(a->val);
+		afficheRGD_r(a->filsDroit);
 		printf(")");
+	}
+}
+
+void afficheRDG_r(ArbreBinaire a){
+	if(!estVide(a)){
+		printf("(");
+		afficheRDG_r(a->filsDroit);
+		afficheElement(a->val);
+		afficheRDG_r(a->filsGauche);
+		printf(")");
+	}
+}
+
+void prettyPrint(ArbreBinaire a, int profondeur){
+	if(!estVide(a)){
+		printf("\n");
+		for(int i= 0; i<profondeur; i++){
+			printf("|--");
+		}
+		afficheElement(a->val);
+		prettyPrint(a->filsDroit, profondeur+1);
+		prettyPrint(a->filsGauche,profondeur+1);
+		
+	}
+	else{
+		printf("\n");
+		printf("X");
 	}
 }
 
@@ -142,4 +171,3 @@ ArbreBinaire supprimer_r(ArbreBinaire a,Element x)
 void detruire_r(ArbreBinaire a){
 
 }
-

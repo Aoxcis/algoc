@@ -2,6 +2,7 @@
     "files.associations": {
         "factorielle.h": "c",
         "parfaits.h": "c",
-        "linkedlistofmusic.h": "c"
+        "linkedlistofmusic.h": "c",
+        "arbre-bin-recherche.h": "c"
     }
 }
